@@ -36,7 +36,7 @@ app = create_app()
 if __name__ == "__main__":
     from server.ssl_context import create_ssl_context
 
-    protocol = os.getenv("SERVER_PROTOCOL", "https").lower()
+    protocol = config.SERVER_PROTOCOL
 
     if protocol == "http":
         logger.info("Starting HTTP server on %s:%s", config.SERVER_HOST, config.SERVER_PORT)

@@ -20,7 +20,7 @@ _swagger_template = {
         "description": "Flask HTTPS Web Server with mTLS — 对应 SpringBoot2Demo 的 Python 实现",
         "version": "1.0.0",
     },
-    "servers": [{"url": f"http://localhost:{config.SERVER_PORT}"}],
+    "servers": [{"url": f"{config.SERVER_PROTOCOL}://localhost:{config.SERVER_PORT}"}],
 }
 
 
