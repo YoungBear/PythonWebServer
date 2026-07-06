@@ -8,7 +8,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CERT_DIR = os.path.join(BASE_DIR, "cert")
 SERVER_CERT = os.path.join(CERT_DIR, "server.crt")
 SERVER_KEY = os.path.join(CERT_DIR, "server.key")
-SERVER_KEY_PASSWORD = "ServerKey@2024"
+SERVER_KEY_PASSWORD = os.getenv("SERVER_KEY_PASSWORD", "")
 ROOTCA_CERT = os.path.join(CERT_DIR, "rootca.crt")
 
 SERVER_HOST = os.getenv("SERVER_HOST", "0.0.0.0")
