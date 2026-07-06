@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 app = Flask(__name__)
 
 
-@app.route("/SpringBoot2Demo/demo/current")
+@app.route("/PythonWebServer/demo/current")
 def current():
     now = datetime.now(timezone.utc)
     timestamp = str(int(now.timestamp() * 1000))
