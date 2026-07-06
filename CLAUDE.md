@@ -9,18 +9,24 @@
 pip install -r requirements.txt
 
 # 运行应用（HTTPS 端口 8888，路径 /PythonWebServer/demo/current）
-python app.py
+python run.py
 ```
 
 ## 架构
 
 这是一个基于 **Flask 3.1.3 + Python 3.9** 的演示项目，展示使用自签名证书配置 **双向 TLS (mTLS)**。
 
-**单文件 Flask 应用**（`app.py`）：
-- 使用 `ssl.SSLContext`（`PROTOCOL_TLS_SERVER`）配置 HTTPS
+**包结构**：
+- `run.py` — 入口，加载 `.env`，创建 app，根据 `SERVER_PROTOCOL` 选择 HTTP/HTTPS 模式
+- `server/__init__.py` — `create_app()` 工厂，加载配置、注册 Blueprint
+- `server/config.py` — 路径常量（基于 `__file__` 解析）、Flask 配置
+- `server/routes.py` — Blueprint `demo_bp`，暴露 `GET /PythonWebServer/demo/current`
+- `server/ssl_context.py` — `create_ssl_context()`，配置 TLS 1.2+、服务端证书链、可选 mTLS
+
+**TLS/mTLS**：
+- 使用 `ssl.SSLContext`（`PROTOCOL_TLS_SERVER`）
 - 最低 TLS 版本: 1.2
 - 客户端证书认证可配置，默认开启（`VERIFY_CLIENT_CERT=true`）
-- 暴露 `GET /PythonWebServer/demo/current` 接口，以 JSON 格式返回当前时间（`zonedDateTime` + `timestamp`）
 - 服务端证书链: `cert/server.crt` + `cert/server.key`（PEM 格式）
 - CA 信任库: `cert/rootca.crt`（PEM 格式）
 

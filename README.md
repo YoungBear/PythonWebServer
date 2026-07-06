@@ -6,7 +6,7 @@ Python Flask HTTPS Web Server，基于 Flask 3.1.3 + Python 3.9
 
 ```bash
 pip install -r requirements.txt
-python app.py
+python run.py
 ```
 
 服务启动后访问 `https://localhost:8888/PythonWebServer/demo/current`（需客户端证书）。
@@ -16,11 +16,14 @@ python app.py
 通过 `.env` 文件配置：
 
 ```
-SERVER_PROTOCOL=https       # http 或 https（默认 https）
-VERIFY_CLIENT_CERT=true     # 是否校验客户端证书（默认 true，仅 HTTPS 时生效）
+SERVER_PROTOCOL=https          # http 或 https（默认 https）
+VERIFY_CLIENT_CERT=true        # 是否校验客户端证书（默认 true，仅 HTTPS 时生效）
+SERVER_HOST=0.0.0.0            # 监听地址（默认 0.0.0.0）
+SERVER_PORT=8888               # 监听端口（默认 8888）
+CONTEXT_PATH=/PythonWebServer  # 上下文路径前缀（默认 /PythonWebServer）
 ```
 
-设为 `false` 即可跳过客户端证书校验，方便开发调试。
+设为 `VERIFY_CLIENT_CERT=false` 即可跳过客户端证书校验，方便开发调试。
 
 ## 验证
 
