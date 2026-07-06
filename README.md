@@ -10,6 +10,7 @@
 - **健康检查** — `GET /health`，始终在根路径，返回 `{"status": "UP", "timestamp": "..."}`
 - **JSON 错误响应** — 所有 HTTP 错误统一返回 JSON 格式
 - **日志轮转** — 控制台 + 文件双输出，按天轮转保留 30 天
+- **API 文档** — Swagger UI（`/apidocs/`），OpenAPI 3.0 格式
 - **可配置** — 协议、地址、端口、上下文路径、日志级别均可通过 .env 配置
 
 ## API
@@ -17,6 +18,8 @@
 | 方法 | 路径 | 说明 |
 |------|------|------|
 | GET | `/health` | 健康检查 |
+| GET | `/apidocs/` | Swagger UI API 文档 |
+| GET | `/apispec_1.json` | OpenAPI 3.0 规范 JSON |
 | GET | `{CONTEXT_PATH}/demo/current` | 当前时间 |
 
 ## 快速开始
@@ -44,7 +47,7 @@ LOG_LEVEL=INFO                 # 日志级别（默认 INFO）
 ```
 ├── run.py                    # 入口
 ├── server/                   # 应用包
-│   ├── __init__.py           # 工厂、错误处理、健康检查
+│   ├── __init__.py           # 工厂、错误处理、健康检查、Swagger
 │   ├── config.py             # 配置
 │   ├── routes.py             # 路由
 │   └── ssl_context.py        # SSL 上下文
@@ -58,6 +61,9 @@ LOG_LEVEL=INFO                 # 日志级别（默认 INFO）
 ```bash
 # 健康检查
 curl -k https://localhost:8888/health
+
+# Swagger API 文档
+open https://localhost:8888/apidocs/
 
 # 不带客户端证书 → 被拒绝
 curl -k https://localhost:8888/PythonWebServer/demo/current
