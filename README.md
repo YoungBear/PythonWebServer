@@ -16,7 +16,8 @@ python app.py
 通过 `.env` 文件配置：
 
 ```
-VERIFY_CLIENT_CERT=true   # 是否校验客户端证书（默认 true）
+SERVER_PROTOCOL=https       # http 或 https（默认 https）
+VERIFY_CLIENT_CERT=true     # 是否校验客户端证书（默认 true，仅 HTTPS 时生效）
 ```
 
 设为 `false` 即可跳过客户端证书校验，方便开发调试。

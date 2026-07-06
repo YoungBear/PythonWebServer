@@ -38,5 +38,11 @@ def create_ssl_context():
 
 
 if __name__ == "__main__":
-    ssl_ctx = create_ssl_context()
-    app.run(host="0.0.0.0", port=8888, ssl_context=ssl_ctx, debug=False)
+    protocol = os.getenv("SERVER_PROTOCOL", "https").lower()
+    if protocol == "http":
+        app.run(host="0.0.0.0", port=8888, debug=False)
+    else:
+        if protocol != "https":
+            logger.warning("Unknown SERVER_PROTOCOL '%s', falling back to https", protocol)
+        ssl_ctx = create_ssl_context()
+        app.run(host="0.0.0.0", port=8888, ssl_context=ssl_ctx, debug=False)
