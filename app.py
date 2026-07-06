@@ -1,8 +1,12 @@
+import os
 import ssl
 import logging
 from datetime import datetime, timezone
 
+from dotenv import load_dotenv
 from flask import Flask, jsonify
+
+load_dotenv()
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -28,7 +32,8 @@ def create_ssl_context():
         password="ServerKey@2024",
     )
     ctx.load_verify_locations(cafile="cert/rootca.crt")
-    ctx.verify_mode = ssl.CERT_REQUIRED
+    verify_client_cert = os.getenv("VERIFY_CLIENT_CERT", "true").lower() == "true"
+    ctx.verify_mode = ssl.CERT_REQUIRED if verify_client_cert else ssl.CERT_NONE
     return ctx
 
 

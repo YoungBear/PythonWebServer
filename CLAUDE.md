@@ -19,12 +19,14 @@ python app.py
 **单文件 Flask 应用**（`app.py`）：
 - 使用 `ssl.SSLContext`（`PROTOCOL_TLS_SERVER`）配置 HTTPS
 - 最低 TLS 版本: 1.2
-- 要求客户端证书认证（`ssl.CERT_REQUIRED`）
+- 客户端证书认证可配置，默认开启（`VERIFY_CLIENT_CERT=true`）
 - 暴露 `GET /PythonWebServer/demo/current` 接口，以 JSON 格式返回当前时间（`zonedDateTime` + `timestamp`）
 - 服务端证书链: `cert/server.crt` + `cert/server.key`（PEM 格式）
 - CA 信任库: `cert/rootca.crt`（PEM 格式）
 
-**依赖**: Flask 3.1.3
+**配置**: 通过 `.env` 文件设置环境变量，`python-dotenv` 自动加载。
+
+**依赖**: Flask 3.1.3, python-dotenv 1.2.1
 
 **证书** 复用 SpringBoot2Demo 预生成的自签名证书，存放于 `cert/`。`cert/client.p12` 为测试用客户端证书。
 
