@@ -1,6 +1,6 @@
 # Python Flask HTTPS Web Server
 
-基于 Flask 3.1.3 + Python 3.9 的演示项目，对应 [SpringBoot2Demo](../SpringBoot2Demo) 的 Python 实现。
+基于 Flask 3.1.3 + Python 3.12 的演示项目，对应 [SpringBoot2Demo](../SpringBoot2Demo) 的 Python 实现。
 
 ## 特性
 
@@ -40,6 +40,7 @@ SERVER_HOST=0.0.0.0            # 监听地址（默认 0.0.0.0）
 SERVER_PORT=8888               # 监听端口（默认 8888）
 CONTEXT_PATH=/PythonWebServer  # 上下文路径前缀（默认 /PythonWebServer）
 LOG_LEVEL=INFO                 # 日志级别（默认 INFO）
+SERVER_KEY_PASSWORD=...        # 证书密钥密码
 ```
 
 ## 项目结构

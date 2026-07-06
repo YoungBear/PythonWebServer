@@ -14,7 +14,7 @@ python run.py
 
 ## 架构
 
-这是一个基于 **Flask 3.1.3 + Python 3.9** 的演示项目，展示使用自签名证书配置 **双向 TLS (mTLS)**。
+这是一个基于 **Flask 3.1.3 + Python 3.12** 的演示项目，展示使用自签名证书配置 **双向 TLS (mTLS)**。
 
 **包结构**：
 - `run.py` — 入口，加载 `.env`，配置日志，创建 app，waitress 启动
@@ -47,8 +47,9 @@ python run.py
 - `SERVER_HOST` / `SERVER_PORT` — 监听地址 / 端口
 - `CONTEXT_PATH` — 上下文路径前缀
 - `LOG_LEVEL` — 日志级别
+- `SERVER_KEY_PASSWORD` — 证书密钥密码
 
-**依赖**: Flask 3.1.3, python-dotenv 1.2.1, waitress 3.0.2, flasgger 0.9.7.1
+**依赖**: Flask 3.1.3, python-dotenv 1.2.2, waitress 3.0.2, flasgger 0.9.7.1
 
 **证书** 复用 SpringBoot2Demo 预生成的自签名证书，存放于 `cert/`。`cert/client.p12` 为测试用客户端证书。
 
