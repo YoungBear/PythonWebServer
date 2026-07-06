@@ -25,7 +25,13 @@
 ## 快速开始
 
 ```bash
+# 安装依赖
 pip install -r requirements.txt
+
+# 运行测试
+python3 -m pytest tests/ -v
+
+# 启动应用
 python run.py
 ```
 
@@ -48,10 +54,12 @@ SERVER_KEY_PASSWORD=...        # 证书密钥密码
 ```
 ├── run.py                    # 入口
 ├── server/                   # 应用包
-│   ├── __init__.py           # 工厂、错误处理、健康检查、Swagger
+│   ├── __init__.py           # 工厂、错误处理、健康检查
 │   ├── config.py             # 配置
 │   ├── routes.py             # 路由
+│   ├── swagger.py            # OpenAPI 规范 + Swagger UI
 │   └── ssl_context.py        # SSL 上下文
+├── tests/                    # 测试
 ├── cert/                     # 证书
 ├── logs/                     # 日志文件
 └── requirements.txt

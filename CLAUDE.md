@@ -8,6 +8,9 @@
 # 安装依赖
 pip install -r requirements.txt
 
+# 运行测试
+python3 -m pytest tests/ -v
+
 # 运行应用（HTTPS 端口 8888，路径 /PythonWebServer/demo/current）
 python run.py
 ```
@@ -18,9 +21,10 @@ python run.py
 
 **包结构**：
 - `run.py` — 入口，加载 `.env`，配置日志，创建 app，waitress 启动
-- `server/__init__.py` — `create_app()` 工厂，注册 Blueprint、错误处理、健康检查、Swagger
-- `server/config.py` — 路径常量（基于 `__file__` 解析）、Flask 配置、运行时配置
+- `server/__init__.py` — `create_app()` 工厂，注册 Blueprint、错误处理、健康检查
+- `server/config.py` — 路径常量（基于 `__file__` 解析）、运行时配置（全部从 env 读取）
 - `server/routes.py` — Blueprint `demo_bp`，暴露 `GET /demo/current`
+- `server/swagger.py` — OpenAPI 3.0 规范 + Swagger UI（自建，无额外依赖）
 - `server/ssl_context.py` — `create_ssl_context()`，配置 TLS 1.2+、服务端证书链、可选 mTLS
 
 **服务器**: 生产级 WSGI 服务器 waitress（`app.run()` 已替换）。
@@ -49,7 +53,9 @@ python run.py
 - `LOG_LEVEL` — 日志级别
 - `SERVER_KEY_PASSWORD` — 证书密钥密码
 
-**依赖**: Flask 3.1.3, python-dotenv 1.2.2, waitress 3.0.2, flasgger 0.9.7.1
+**依赖**: Flask 3.1.3, python-dotenv 1.2.2, waitress 3.0.2, pytest 8.4.2
+
+**测试**: `tests/` 目录，pytest + Flask test client，覆盖 health、demo、错误处理、Swagger 端点。
 
 **证书** 复用 SpringBoot2Demo 预生成的自签名证书，存放于 `cert/`。`cert/client.p12` 为测试用客户端证书。
 
