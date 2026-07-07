@@ -51,18 +51,35 @@ SERVER_KEY_PASSWORD=...        # 证书密钥密码
 
 ## 项目结构
 
+项目采用 PyPA 推荐的 **src-layout** 结构，源代码统一置于 `src/` 目录下。
+
 ```
-├── run.py                    # 入口
-├── server/                   # 应用包
-│   ├── __init__.py           # 工厂、错误处理、健康检查
-│   ├── config.py             # 配置
-│   ├── routes.py             # 路由
-│   ├── swagger.py            # OpenAPI 规范 + Swagger UI
-│   └── ssl_context.py        # SSL 上下文
-├── tests/                    # 测试
-├── cert/                     # 证书
-├── logs/                     # 日志文件
-└── requirements.txt
+PythonWebServer/
+├── src/
+│   └── server/                   # 应用主包
+│       ├── __init__.py           # Flask 工厂 (create_app)、错误处理、健康检查
+│       ├── config.py             # 路径常量 (cert/、logs/) 与运行时配置 (从 .env 读取)
+│       ├── routes.py             # Blueprint demo_bp，暴露 GET {CONTEXT_PATH}/demo/current
+│       ├── swagger.py            # Blueprint swagger_bp，自建 Swagger UI + OpenAPI 3.0 规范
+│       └── ssl_context.py        # create_ssl_context()，TLS 1.2+ 证书链与 mTLS 配置
+├── tests/                        # pytest 测试套件 (17 个用例)
+│   ├── conftest.py               # Fixture: Flask test client
+│   ├── test_health.py            # /health 端点
+│   ├── test_demo.py              # /demo/current 端点
+│   ├── test_errors.py            # 404/405 错误处理
+│   └── test_swagger.py           # Swagger 端点
+├── cert/                         # 自签名 TLS 证书 (复用 SpringBoot2Demo)
+│   ├── server.crt                # 服务端证书 (PEM)
+│   ├── server.key                # 服务端私钥 (PEM, 密码保护)
+│   ├── rootca.crt                # CA 根证书 (PEM)
+│   └── client.p12                # 测试用客户端证书 (PKCS#12)
+├── docs/                         # 设计文档
+├── logs/                         # 日志输出 (每日轮转，保留 30 天)
+├── run.py                        # 应用入口：加载 .env → 配置日志 → 创建 app → waitress 启动
+├── pyproject.toml                # 项目元数据与 setuptools src-layout 配置
+├── requirements.txt              # 运行时依赖 (Flask, waitress, python-dotenv)
+├── .env                          # 本地环境变量 (不纳入版本控制)
+└── README.md
 ```
 
 ## 验证
