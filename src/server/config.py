@@ -1,6 +1,6 @@
 import os
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 CERT_DIR = os.path.join(BASE_DIR, "cert")
 SERVER_CERT = os.path.join(CERT_DIR, "server.crt")
