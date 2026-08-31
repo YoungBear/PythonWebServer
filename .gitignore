@@ -12,6 +12,9 @@ venv/
 # Logs
 logs/
 
+# Environment
+.env
+
 # VS Code
 .vscode/
 
