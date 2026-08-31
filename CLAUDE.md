@@ -5,11 +5,8 @@
 ## 构建与运行
 
 ```bash
-# 安装依赖
-pip install -r requirements.txt
-
-# 以可编辑模式安装项目（src-layout）
-pip install -e .
+# 安装项目及依赖（dev extra 含 pytest）
+python3 -m pip install -e ".[dev]"
 
 # 运行测试
 python3 -m pytest tests/ -v
@@ -26,7 +23,7 @@ python run.py
 
 **包结构**：
 - `run.py` — 入口，加载 `.env`，配置日志，创建 app，waitress 启动
-- `pyproject.toml` — 项目元数据 + setuptools 配置（`pip install -e .` 安装）
+- `pyproject.toml` — 项目元数据、运行时依赖（dependencies）+ dev 依赖（pytest）、setuptools src-layout 配置
 - `src/server/__init__.py` — `create_app()` 工厂，注册 Blueprint、错误处理、健康检查
 - `src/server/config.py` — 路径常量（基于 `__file__` 解析）、运行时配置（全部从 env 读取）
 - `src/server/routes.py` — Blueprint `demo_bp`，暴露 `GET /demo/current`
@@ -61,7 +58,7 @@ python run.py
 
 **依赖**: Flask 3.1.3, python-dotenv 1.2.2, waitress 3.0.2, pytest 8.4.2
 
-**测试**: `tests/` 目录，pytest + Flask test client，覆盖 health、demo、错误处理、Swagger 端点。
+**测试**: `tests/` 目录，pytest + Flask test client，覆盖 health、demo、错误处理、Swagger 端点、配置（`CONTEXT_PATH` 规范化、`VERIFY_CLIENT_CERT` 解析）。
 
 **证书** 复用 SpringBoot2Demo 预生成的自签名证书，存放于 `cert/`。`cert/client.p12` 为测试用客户端证书。
 

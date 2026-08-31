@@ -1,4 +1,3 @@
-import os
 import ssl
 
 from . import config
@@ -13,6 +12,5 @@ def create_ssl_context():
         password=config.SERVER_KEY_PASSWORD,
     )
     ctx.load_verify_locations(cafile=config.ROOTCA_CERT)
-    verify_client_cert = os.getenv("VERIFY_CLIENT_CERT", "true").lower() == "true"
-    ctx.verify_mode = ssl.CERT_REQUIRED if verify_client_cert else ssl.CERT_NONE
+    ctx.verify_mode = ssl.CERT_REQUIRED if config.VERIFY_CLIENT_CERT else ssl.CERT_NONE
     return ctx

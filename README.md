@@ -25,8 +25,8 @@
 ## 快速开始
 
 ```bash
-# 安装依赖
-pip install -r requirements.txt
+# 安装项目及依赖（dev extra 含 pytest）
+python3 -m pip install -e ".[dev]"
 
 # 运行测试
 python3 -m pytest tests/ -v
@@ -37,7 +37,7 @@ python run.py
 
 ## 配置
 
-通过 `.env` 文件配置：
+复制模板 `cp .env.example .env` 后按需修改：
 
 ```
 SERVER_PROTOCOL=https          # http 或 https（默认 https）
@@ -76,8 +76,8 @@ PythonWebServer/
 ├── docs/                         # 设计文档
 ├── logs/                         # 日志输出 (每日轮转，保留 30 天)
 ├── run.py                        # 应用入口：加载 .env → 配置日志 → 创建 app → waitress 启动
-├── pyproject.toml                # 项目元数据与 setuptools src-layout 配置
-├── requirements.txt              # 运行时依赖 (Flask, waitress, python-dotenv)
+├── pyproject.toml                # 项目元数据、依赖声明与 setuptools src-layout 配置
+├── .env.example                  # 环境变量模板 (复制为 .env 后填写)
 ├── .env                          # 本地环境变量 (不纳入版本控制)
 └── README.md
 ```
