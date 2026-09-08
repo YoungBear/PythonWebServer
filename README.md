@@ -65,12 +65,13 @@ PythonWebServer/
 │       ├── routes.py             # Blueprint demo_bp，暴露 GET {CONTEXT_PATH}/demo/current
 │       ├── swagger.py            # Blueprint swagger_bp，自建 Swagger UI + OpenAPI 3.0 规范
 │       └── ssl_context.py        # create_ssl_context()，TLS 1.2+ 证书链与 mTLS 配置
-├── tests/                        # pytest 测试套件 (17 个用例)
+├── tests/                        # pytest 测试套件 (25 个用例)
 │   ├── conftest.py               # Fixture: Flask test client
 │   ├── test_health.py            # /health 端点
 │   ├── test_demo.py              # /demo/current 端点
 │   ├── test_errors.py            # 404/405 错误处理
-│   └── test_swagger.py           # Swagger 端点
+│   ├── test_swagger.py           # Swagger 端点
+│   └── test_config.py            # CONTEXT_PATH 规范化与 VERIFY_CLIENT_CERT 解析
 ├── cert/                         # 自签名 TLS 证书 (复用 SpringBoot2Demo)
 │   ├── server.crt                # 服务端证书 (PEM)
 │   ├── server.key                # 服务端私钥 (PEM, 密码保护)
@@ -104,6 +105,6 @@ curl -k --cert-type P12 --cert cert/client.p12:'ClientKeyStore@2024' \
   https://localhost:8888/PythonWebServer/demo/current
 
 # HTTP 模式
-SERVER_PROTOCOL=http python run.py
+SERVER_PROTOCOL=http poetry run python run.py
 curl http://localhost:8888/PythonWebServer/demo/current
 ```
