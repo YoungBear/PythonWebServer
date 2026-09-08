@@ -61,7 +61,7 @@ poetry run python run.py
 - `LOG_LEVEL` — 日志级别
 - `SERVER_KEY_PASSWORD` — 证书密钥密码
 
-**依赖**: 由 poetry 管理并锁定（poetry.lock）。直接依赖：Flask 3.1.3, python-dotenv 1.2.3, waitress 3.0.2；dev: pytest 8.4.2。
+**依赖**: 由 poetry 管理并锁定（poetry.lock）。直接依赖：Flask 3.1.3, python-dotenv 1.2.3, waitress 3.0.2；dev: pytest 8.4.2。更新依赖用 `poetry add <pkg>@<ver>`（改约束+lock+安装）或 `poetry update <pkg>`（仅按约束更新 lock）；提交时 pyproject.toml 与 poetry.lock 需同时提交。
 
 **测试**: `tests/` 目录，pytest + Flask test client，覆盖 health、demo、错误处理、Swagger 端点、配置（`CONTEXT_PATH` 规范化、`VERIFY_CLIENT_CERT` 解析）。
 

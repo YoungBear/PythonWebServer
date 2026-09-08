@@ -52,6 +52,33 @@ LOG_LEVEL=INFO                 # 日志级别（默认 INFO）
 SERVER_KEY_PASSWORD=...        # 证书密钥密码
 ```
 
+## 更新依赖
+
+依赖由 poetry 管理，日常更新用 `poetry add`（一步完成：改约束 → 重新解析 lock → 安装）：
+
+```bash
+# 查看可更新版本
+poetry show --outdated
+
+# 升级到最新版（更新 pyproject 约束 + poetry.lock + 安装）
+poetry add flask@latest
+
+# 升级到指定版本
+poetry add flask@3.2.0
+
+# 仅按现有约束更新 lock（pyproject 不变）
+poetry update flask
+
+# 验证并提交（两个文件需同时提交）
+poetry run pytest tests/ -v
+git add pyproject.toml poetry.lock
+git commit -m "build: 升级 flask 至 3.2.0"
+```
+
+注意：
+- `pyproject.toml` 与 `poetry.lock` 需同时提交，否则 `poetry install` 校验失败
+- 跨大版本升级（如 flask 3 → 4）用 `poetry add flask@^4.0.0`，现有 `<4` 约束会阻止 `poetry update`
+
 ## 项目结构
 
 项目采用 PyPA 推荐的 **src-layout** 结构，源代码统一置于 `src/` 目录下。
