@@ -25,14 +25,17 @@
 ## 快速开始
 
 ```bash
-# 安装项目及依赖（dev extra 含 pytest）
-python3 -m pip install -e ".[dev]"
+# 安装 poetry（一次性）
+python3 -m pip install poetry
+
+# 安装依赖（自动创建 .venv，按 poetry.lock 安装）
+poetry install
 
 # 运行测试
-python3 -m pytest tests/ -v
+poetry run pytest tests/ -v
 
 # 启动应用
-python run.py
+poetry run python run.py
 ```
 
 ## 配置
@@ -76,7 +79,9 @@ PythonWebServer/
 ├── docs/                         # 设计文档
 ├── logs/                         # 日志输出 (每日轮转，保留 30 天)
 ├── run.py                        # 应用入口：加载 .env → 配置日志 → 创建 app → waitress 启动
-├── pyproject.toml                # 项目元数据、依赖声明与 setuptools src-layout 配置
+├── pyproject.toml                # 项目元数据 (PEP 621)、依赖声明与 poetry-core 构建配置
+├── poetry.toml                   # poetry 配置 (虚拟环境建在项目内 .venv)
+├── poetry.lock                   # 依赖锁文件 (含传递依赖，可复现构建)
 ├── .env.example                  # 环境变量模板 (复制为 .env 后填写)
 ├── .env                          # 本地环境变量 (不纳入版本控制)
 └── README.md

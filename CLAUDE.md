@@ -5,14 +5,17 @@
 ## 构建与运行
 
 ```bash
-# 安装项目及依赖（dev extra 含 pytest）
-python3 -m pip install -e ".[dev]"
+# 安装 poetry（一次性，注意用 python3 -m pip，PATH 上 pip 属于 Python 3.9）
+python3 -m pip install poetry
+
+# 安装依赖（在项目内创建 .venv，按 poetry.lock 安装）
+poetry install
 
 # 运行测试
-python3 -m pytest tests/ -v
+poetry run pytest tests/ -v
 
 # 运行应用（HTTPS 端口 8888，路径 /PythonWebServer/demo/current）
-python run.py
+poetry run python run.py
 ```
 
 ## 架构
@@ -23,7 +26,9 @@ python run.py
 
 **包结构**：
 - `run.py` — 入口，加载 `.env`，配置日志，创建 app，waitress 启动
-- `pyproject.toml` — 项目元数据、运行时依赖（dependencies）+ dev 依赖（pytest）、setuptools src-layout 配置
+- `pyproject.toml` — 项目元数据（PEP 621）、依赖声明（poetry 管理）、poetry-core 构建配置
+- `poetry.toml` — 项目级 poetry 配置（虚拟环境建在项目内 .venv）
+- `poetry.lock` — 依赖锁文件（含传递依赖，保证可复现构建）
 - `src/server/__init__.py` — `create_app()` 工厂，注册 Blueprint、错误处理、健康检查
 - `src/server/config.py` — 路径常量（基于 `__file__` 解析）、运行时配置（全部从 env 读取）
 - `src/server/routes.py` — Blueprint `demo_bp`，暴露 `GET /demo/current`
@@ -56,7 +61,7 @@ python run.py
 - `LOG_LEVEL` — 日志级别
 - `SERVER_KEY_PASSWORD` — 证书密钥密码
 
-**依赖**: Flask 3.1.3, python-dotenv 1.2.2, waitress 3.0.2, pytest 8.4.2
+**依赖**: 由 poetry 管理并锁定（poetry.lock）。直接依赖：Flask 3.1.3, python-dotenv 1.2.3, waitress 3.0.2；dev: pytest 8.4.2。
 
 **测试**: `tests/` 目录，pytest + Flask test client，覆盖 health、demo、错误处理、Swagger 端点、配置（`CONTEXT_PATH` 规范化、`VERIFY_CLIENT_CERT` 解析）。
 
